@@ -1,0 +1,16 @@
+Using Behavior Driven Development
+build Band Account Management system
+with following functionality:
+
+1) Bank account was created with balance equal 0
+
+2) Make deposit
+
+3) Make withdraw
+
+4) Not allowed to withdraw more money then bank account hold
+
+5) Day limit for withdraw
+
+6) Etc.
+

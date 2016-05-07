@@ -1,0 +1,20 @@
+ChangePassword service requirements:
+
+1) Only users successfully
+   logged to system can change
+   their passwords.
+
+2) For password
+   change user must provide
+   new password twice
+   (confirm new password).
+
+3) New password and confirmed
+   password must be identical.
+
+4) For new password
+   a user cannot use any
+   of their previous 3 passwords.
+
+5) Password must contain
+   numbers and letters.

@@ -1,0 +1,8 @@
+Task for development: Implement rule 1.
+
+
+There are several rules for logging in to our system:
+
+1) When logging in,
+   a user provides a login and password.
+

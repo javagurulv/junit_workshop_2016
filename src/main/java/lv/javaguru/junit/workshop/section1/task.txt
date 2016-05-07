@@ -1,0 +1,12 @@
+Write automated tests for:
+
+1) ArraySorting
+2) SequentialSearch
+3) NumberOverturn
+4) BinarySearch
+
+
+NumberOverturn class contains number overturn algorithm.
+This algorithm overturn number (example: 1002 -> 2001).
+Write tests for NumberOverturn class.
+If needed refactor NumberOverturn class.

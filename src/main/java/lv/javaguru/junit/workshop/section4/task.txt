@@ -1,0 +1,10 @@
+Use TDD to develop Camera control system.
+Camera control system consist of following
+components: camera, sensor and memory card.
+
+Following functionality must be implemented:
+1) Power up sensor when camera turned on
+2) Power down sensor when camera turned off
+3) Do nothing when press shutter on switched off camera
+4) Read data from sensor when press shutter on switched on camera
+5) Store data from sensor to memory when press shutter on switched on camera

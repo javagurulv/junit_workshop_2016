@@ -1,0 +1,20 @@
+Task for development: Implement rule 4.
+
+
+There are several rules for logging in to our system:
+
+1) When logging in,
+   a user provides a login and password.
+
+2) The login is a non-blank,
+   unique string containing just about any characters.
+   If login is not provided then throw exception.
+
+3) The password is a non-blank,
+   unique string containing just about any characters.
+   If password is not provided then throw exception.
+
+4) If database contain user with provided credentials,
+   then user must be successfully logged to application.
+   Else throw exception.
+
