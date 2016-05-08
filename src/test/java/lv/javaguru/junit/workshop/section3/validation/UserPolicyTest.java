@@ -1,5 +1,6 @@
 package lv.javaguru.junit.workshop.section3.validation;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,28 +12,52 @@ import static org.mockito.Mockito.*;
 
 public class UserPolicyTest {
 
+    private EmptyRule emptyRule;
+    private PasswordRule passwordRule;
+    private User user;
+
+
+    @Before
+    public void init() {
+        emptyRule = mock(EmptyRule.class);
+        passwordRule = mock(PasswordRule.class);
+        user = mock(User.class);
+    }
+
     @Test
     public void shouldReturnEmptyErrorListWhenNoExceptions() {
-        EmptyRule emptyRule = mock(EmptyRule.class);
-        PasswordRule passwordRule = mock(PasswordRule.class);
+        checkResults(
+                new ArrayList<>(),
+                new ArrayList<>()
+        );
+    }
 
-        User user = new User();
-        doReturn(new ArrayList<>())
+    @Test
+    public void shouldReturnErrorsFromEmptyRule() {
+        List<ValidationError> emptyRuleErrors = new ArrayList<>();
+        emptyRuleErrors.add(ValidationError.CONFIRM_PASSWORD_EMPTY);
+
+        checkResults(emptyRuleErrors, new ArrayList<>());
+    }
+
+
+    private void checkResults(List<ValidationError> emptyRuleErrors,
+                              List<ValidationError> passwordRuleErrors) {
+        doReturn(emptyRuleErrors)
                 .when(emptyRule)
                 .apply(user);
-        doReturn(new ArrayList<>())
+
+        doReturn(passwordRuleErrors)
                 .when(passwordRule)
                 .apply(user);
 
         UserPolicy policy = new UserPolicy(emptyRule, passwordRule);
 
-        List<ValidationError> errors = policy.validate(user);
+        List<ValidationError> allErrors = policy.validate(user);
 
-        assertThat(errors.isEmpty(), is(true));
-        verify(emptyRule).apply(user);
-        verify(passwordRule).apply(user);
+        assertThat(allErrors.size(), is(emptyRuleErrors.size() + passwordRuleErrors.size()));
+        assertThat(allErrors.containsAll(emptyRuleErrors), is(true));
+        assertThat(allErrors.containsAll(passwordRuleErrors), is(true));
     }
-
-
 
 }
