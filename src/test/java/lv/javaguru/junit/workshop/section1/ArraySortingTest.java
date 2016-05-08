@@ -16,7 +16,7 @@ public class ArraySortingTest {
 
     @Test
     public void whenSortArrayWithOneElementThenNothingHappens() {
-        int[] arr = {1};
+        int[] arr = {};
         ArraySorting.sortArray(arr);
         assertThat(arr[0], is(1));
     }
