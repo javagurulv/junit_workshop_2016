@@ -7,40 +7,60 @@ class LoginServiceImpl implements LoginService {
     private Database database;
 
 
-    public LoginServiceImpl(Database database) {
+    LoginServiceImpl(Database database) {
         this.database = database;
     }
 
-    public boolean login(String login, String password) {
+    @Override
+    public UserAccount login(String login, String password) {
+        makeSureLoginNotEmpty(login);
+        makeSurePasswordNotEmpty(password);
 
-        if (isLoginNotProvided(login)) {
-            return false;
-        }
+        User user = findUserInDB(login);
+        makeSurePasswordsAreEqual(password, user);
 
-        if (isPasswordNotProvided(password)) {
-            return false;
-        }
+        UserAccount userAccount = findUserAccountInDB(user);
+        makeSureUserAccountNotRevoked(userAccount);
 
+        return userAccount;
+    }
+
+    private User findUserInDB(String login) {
         Optional<User> userOptional = database.getUserByLogin(login);
-        if (!userOptional.isPresent()) {
-            return false;
-        } else {
-            User userFromDb = userOptional.get();
-            String userFromDbPassword = userFromDb.getPassword();
-            if (!password.equals(userFromDbPassword)) {
-                return false;
-            }
+        return userOptional.orElseThrow(
+                () -> new IllegalArgumentException("User not found in DB!")
+        );
+    }
+
+    private UserAccount findUserAccountInDB(User user) {
+        Optional<UserAccount> userAccountOptional = database.getUserAccount(user);
+        return userAccountOptional.orElseThrow(
+                () -> new IllegalArgumentException("User Account not found in DB!")
+        );
+    }
+
+    private void makeSureUserAccountNotRevoked(UserAccount userAccount) {
+        if (userAccount.isRevoked()) {
+            throw new IllegalArgumentException("User Account is revoked!");
         }
-
-        return true;
     }
 
-    private boolean isLoginNotProvided(String login) {
-        return login == null || login.equals("");
+    private void makeSurePasswordsAreEqual(String password, User user) {
+        if (!user.getPassword().equals(password)) {
+            throw new IllegalArgumentException();
+        }
     }
 
-    private boolean isPasswordNotProvided(String password) {
-        return password == null || password.equals("");
+    private void makeSurePasswordNotEmpty(String password) {
+        if (password == null || password.isEmpty()) {
+            throw new IllegalArgumentException("Password is empty!");
+        }
+    }
+
+    private void makeSureLoginNotEmpty(String login) {
+        if (login == null || login.isEmpty()) {
+            throw new IllegalArgumentException("Login is empty!");
+        }
     }
 
 }

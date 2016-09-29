@@ -18,3 +18,22 @@ There are several rules for logging in to our system:
    then user must be successfully logged to application.
    Else throw exception.
 
+5) Implement tree attempts rule.
+   If user try to login three times with not correct password
+   then his account must be revoked.
+
+6) If user account is revoked then user can not login anymore.
+
+7) After successful login, incorrect attempts
+   counter must be switched to zero.
+
+8) Collect and store information about all login attempts
+   (correct and incorrect) for analysis.
+   Store: login attempt date, login status (success, fail),
+   provided login and password, description of failure if applicable.
+
+
+Write solution in TDD style.
+Provide possibility to write fully featured acceptance tests
+ for this functionality (use REST for example).
+

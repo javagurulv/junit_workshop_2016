@@ -6,4 +6,6 @@ public interface Database {
 
     Optional<User> getUserByLogin(String login);
 
+    Optional<UserAccount> getUserAccount(User user);
+
 }
